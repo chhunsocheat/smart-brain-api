@@ -2,7 +2,20 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt-nodejs')
 const cors= require('cors')
-
+const knex=require('knex')
+ const database1=knex({
+    client: 'pg',
+    connection: {
+      host : '127.0.0.1',
+      user : 'postgres',
+      password : 'socheat56',
+      database : 'smart_brain'
+    }
+  });
+database1.select('*').from('users')
+.then(data=>{
+    console.log(data)
+})
 
 const app = express();
 app.use(bodyParser.json())
@@ -47,15 +60,12 @@ app.post('/signin', (req,res)=>{
         } 
     })
 app.post('/register', (req,res)=>{
-    const  {name,email,password,} = req.body
-    database.user.push({ 
-                    id: '125',
-                    name: name,
-                    email : email,
-                    password :password,
-                    entries: 0,
-                    joined: new Date()
-                })
+    const  {name,email} = req.body
+    database1('users').insert({
+        email:email,
+        name:name,
+        joined:new Date()
+    }).then(console.log)
     res.json(database.user[database.user.length-1])
 
 })
@@ -77,9 +87,10 @@ app.put('/image',(req,res)=>{
     let found = false;
     database.user.forEach(user=>{
         if(user.id===id){
+            found = true;
             user.entries++
           return res.json(user.entries)
-        }    if(!found){
+        }   if(!found){
           return  res.json("not found")
         }  
     })
