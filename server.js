@@ -119,7 +119,7 @@ app.put('/image',(req,res)=>{
         res.json(entries[0])
     })
 })
-app.listen(3000,()=>{
+app.listen(process.env.PORT || 3000,()=>{
     console.log('app is running')
 
 });
