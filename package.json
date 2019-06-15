@@ -2,8 +2,10 @@
   "name": "smart-brain-api",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "10.15.3"
+  },
   "dependencies": {
-    "node":"10.15.3",
     "bcrypt-nodejs": "0.0.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
